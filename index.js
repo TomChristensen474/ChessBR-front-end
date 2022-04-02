@@ -15,7 +15,13 @@ function onDragStart (source, piece, position, orientation) {
   }
 }
 
-function onDrop (source, target) {
+function onDrop (source, target, piece) {
+  console.log(piece[1], target)
+  if (source == "spare") {
+    useBonusPiece(piece[1], target)
+    return
+  }
+  
   // see if the move is legal
   var move = game.move({
     from: source,
@@ -27,6 +33,7 @@ function onDrop (source, target) {
   if (move === null) return 'snapback'
 
   updateStatus()
+  sendMove(source + target)
 }
 
 // update the board position after the piece snap
@@ -74,11 +81,12 @@ var config = {
   onDragStart: onDragStart,
   onDrop: onDrop,
   onSnapEnd: onSnapEnd,
+  sparePieces: true,
   pieceTheme: 'img/chesspieces/ChessSVG/{piece}.svg',
 }
 board = Chessboard('board', config)
 
-board0 = Chessboard('board0', config)
-board2 = Chessboard('board2', config)
+board0 = Chessboard('board0', {...config, showNotation: false})
+board2 = Chessboard('board2', {...config, showNotation: false})
 
 updateStatus()

@@ -1,13 +1,15 @@
-const ws = new WebSocket("wss://demo.piesocket.com/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self")
+const ws = new WebSocket("ws://192.168.1.206:8765")
 
 ws.onmessage = (message) => {
-
+    message = JSON.parse(message.data)
+    console.log(message)
     switch(message.type) {
         case "CONNECTED":
-            // code block
+            showConnectedModal()
             break;
 
         case "GAME_STARTED":
+            hideConnectedModal()
             startGame(board)
             break;
 
@@ -46,7 +48,7 @@ ws.onmessage = (message) => {
 }
 
 function updateBoard(board, FENstring) {
-    board.position(FENstring, false)
+    board.position(FENstring, true)
 }
 
 function startGame(board) {
@@ -54,7 +56,7 @@ function startGame(board) {
 }
 
 function updatePlayerCount(playerCount) {
-    console.log(playerCount)
+    $('#playerCount').html("Player Count: " + playerCount)
 }
 
 function gameOver(board) {
@@ -62,6 +64,48 @@ function gameOver(board) {
 }
 
 function notifyBonusPiece(piece) {
-
+    $("#pieceNotificationText").html("You have received a piece: " + piece)
+    $("#pieceNotification").fadeIn()
+    $("#pieceNotification").delay(3000).fadeOut()
 }
 
+function useBonusPiece(piece, target) {
+    ws.send(JSON.stringify({type: "USE_BONUS_PIECE", data: {piece: piece, target: target}}))
+}
+
+let counter = 0
+function startTimer() {
+    counter = 15
+    count()
+}
+
+function count(){
+    if (counter > 0) {
+      counter--
+      setTimeout(count, 1000)
+    }else{
+      counter = 15
+      setTimeout(count, 1000)
+    }
+    $("#timer").css("--value", counter)
+  }
+
+function showConnectedModal() {
+    $('#waitlist_modal')[0].checked = true;
+}
+
+function hideConnectedModal() {
+    $('#waitlist_modal')[0].checked = false;
+}
+
+function connect() {
+    console.log("connecting")
+    ws.send(JSON.stringify({type: "CONNECT_REQUEST", data: []}))
+}
+
+function sendMove(move) {
+    console.log("Sending Move: " + move)
+    ws.send(JSON.stringify({type: "PLAYER_MOVE", data: {move: move}}))
+}
+
+startTimer()

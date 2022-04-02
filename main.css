@@ -1,9 +1,23 @@
+/*.white-1e1d7 {*/
+/*    background-color:  hsl(var(--bc));*/
+/*    color: hsl(var(--b1));*/
+/*}*/
+
+/*.black-3c85d {*/
+/*    background-color: hsl(var(--b1));*/
+/*    color:  hsl(var(--bc));*/
+/*}*/
+
 .white-1e1d7 {
-    background-color:  hsl(var(--bc));
-    color: hsl(var(--b1));
+    background-color:  hsla(var(--bc)/0.5);
+    color: hsla(var(--b1));
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .black-3c85d {
-    background-color: hsl(var(--b1));
-    color:  hsl(var(--bc));
+    background-color: hsla(var(--b1)/0.5);
+    color:  hsla(var(--bc));
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }

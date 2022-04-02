@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-fixed" style="background-image: url(img/background/img.png)">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,13 +17,13 @@
     
 </head>
 <body>
-    <div class="navbar bg-base-100">
-        <a class="btn btn-ghost normal-case text-xl">BR Chess</a>
+    <div class="navbar">
+        <a class="btn btn-ghost normal-case text-xl bg-gradient-to-r from-violet-500 to-fuchsia-500">BR Chess</a>
       </div>
     <div class="flex items-center mb-8">
-        <button class="btn w-lg mx-auto ">Play</button>
+        <button class="btn w-lg mx-auto bg-gradient-to-r from-violet-500 to-fuchsia-500">Play</button>
 
-        <label for="my-modal" class="btn modal-button w-lg mx-auto ">How to Play</label>
+        <label for="my-modal" class="btn modal-button w-lg mx-auto bg-gradient-to-r from-violet-500 to-fuchsia-500">How to Play</label>
     </div>
       
     <div id="board" class="max-w-lg mx-auto shadow-lg flex items-center"></div>
@@ -46,9 +46,6 @@
         
         
     </div>
-    
-
-
     <!-- Put this part before tag -->
     <input type="checkbox" id="my-modal" class="modal-toggle">
     <div class="modal">

@@ -1,0 +1,9 @@
+.white-1e1d7 {
+    background-color:  hsl(var(--bc));
+    color: hsl(var(--b1));
+}
+
+.black-3c85d {
+    background-color: hsl(var(--b1));
+    color:  hsl(var(--bc));
+}

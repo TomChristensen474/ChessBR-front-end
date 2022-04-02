@@ -21,3 +21,18 @@
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
 }
+
+.glass-look {
+    /* From https://css.glass */
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+body {
+    background-image: url("https://tailwindcss.com/_next/static/media/hero-dark@90.a7a063e8f9d179fbd72b0b735c5797b7.jpg");
+    
+}

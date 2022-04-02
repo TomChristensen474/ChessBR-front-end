@@ -74,7 +74,7 @@ var config = {
   onDragStart: onDragStart,
   onDrop: onDrop,
   onSnapEnd: onSnapEnd,
-  pieceTheme: 'img/chesspieces/wikipedia/{piece}.png',
+  pieceTheme: 'img/chesspieces/ChessSVG/{piece}.svg',
 }
 board = Chessboard('board', config)
 

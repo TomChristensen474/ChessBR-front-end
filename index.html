@@ -12,38 +12,53 @@
     <html data-theme="night"></html>
     
 </head>
-<body>
-    <div class="navbar">
+<body class="grid grid-cols-3 auto-rows-min">
+    <div class="navbar col-span-3">
         <a class="btn btn-ghost normal-case text-xl bg-gradient-to-r from-violet-500 to-fuchsia-500">BR Chess</a>
       </div>
 
-
-    <div class="flex flex-row justify-center mb-8">
+      <div class="flex flex-row justify-center mb-8 col-span-3 mt-5">
         <button class="btn w-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 mr-8">Play</button>
 
         <label for="my-modal" class="btn modal-button w-lg bg-gradient-to-r from-violet-500 to-fuchsia-500">How to Play</label>
     </div>
-      
-    <div id="board" class="max-w-lg mx-auto shadow-lg flex items-center"></div>
-    
-    <div class="max-w-xl mx-auto mt-5 glass-look p-6 mb-10">
-        <div class="flex flex-row">
-            <label class="mr-8">Status:</label>
-            <div id="status"></div>
-        </div>
-        
-        <div class="flex flex-row">
-            <label class="mr-8">FEN:</label>
-            <div id="fen"></div>
-        </div>
 
-        <div class="flex flex-row">
-            <label class="mr-8">PGN:</label>
-            <div id="pgn"></div>
-        </div>
+      <div class="max-w-xl col-start-1 mt-20 opacity-60">
+        <div id="board0" class="max-w-sm mx-auto shadow-lg flex items-center"></div>
+      </div>
+
+
+      <div id="main_game" class="max-w-xl col-start-2">
+
+        <div id="board" class="max-w-lg mx-auto shadow-lg flex items-center"></div>
+        
+        <div class="max-w-xl mx-auto mt-5 glass-look p-6 mb-10">
+            <div class="flex flex-row">
+                <label class="mr-8">Status:</label>
+                <div id="status"></div>
+            </div>
+            
+            <div class="flex flex-row">
+                <label class="mr-8">FEN:</label>
+                <div id="fen"></div>
+            </div>
+    
+            <div class="flex flex-row">
+                <label class="mr-8">PGN:</label>
+                <div id="pgn"></div>
+            </div>
+
+      </div>   
         
         
     </div>
+
+    <div class="max-w-xl col-start-3 mt-20 opacity-60">
+        <div id="board2" class="max-w-sm mx-auto shadow-lg flex items-center"></div>
+        </div>
+
+
+
     <!-- Put this part before tag -->
     <input type="checkbox" id="my-modal" class="modal-toggle">
     <div class="modal">

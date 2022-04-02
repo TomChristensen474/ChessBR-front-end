@@ -73,8 +73,12 @@ var config = {
   position: 'start',
   onDragStart: onDragStart,
   onDrop: onDrop,
-  onSnapEnd: onSnapEnd
+  onSnapEnd: onSnapEnd,
+  pieceTheme: 'img/chesspieces/wikipedia/{piece}.png',
 }
 board = Chessboard('board', config)
+
+board0 = Chessboard('board0', config)
+board2 = Chessboard('board2', config)
 
 updateStatus()

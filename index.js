@@ -8,7 +8,7 @@ function onDragStart (source, piece, position, orientation) {
   // do not pick up pieces if the game is over
   if (game.game_over()) return false
 
-  // only pick up pieces for the side to move
+  // only pick up pieces for the white side
   if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
       (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
     return false
@@ -17,7 +17,7 @@ function onDragStart (source, piece, position, orientation) {
 
 function onDrop (source, target, piece) {
   console.log(piece[1], target)
-  if (source == "spare") {
+  if (source === "spare") {
     useBonusPiece(piece[1], target)
     return
   }
@@ -87,8 +87,8 @@ var config = {
 board = Chessboard('board', config)
 $(window).resize(board.resize)
 
-board0 = Chessboard('board0', {...config, showNotation: false})
-board2 = Chessboard('board2', {...config, showNotation: false})
+board0 = Chessboard('board0', {...config, draggable: false, showNotation: false})
+board2 = Chessboard('board2', {...config, draggable: false, showNotation: false})
 $(window).resize(board0.resize)
 $(window).resize(board2.resize)
 

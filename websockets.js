@@ -1,8 +1,20 @@
-const ws = new WebSocket("ws://192.168.1.206:8765")
+// const ws = new WebSocket("ws://192.168.1.206:8765");
+const ws = new WebSocket("ws://localhost:8765");
+
+ws.onopen = () => {
+  console.log("Connected to server");
+  // ws.send({type: "CONNECT_REQUEST"})
+};
+
+const send = (type, data) => {
+    console.log(">>>", JSON.stringify({type, data}));
+    ws.send(JSON.stringify({type, data}));
+}
 
 ws.onmessage = (message) => {
     message = JSON.parse(message.data)
-    console.log(message)
+    console.log("<<<", message);
+    const data = message.data;
     switch(message.type) {
         case "CONNECTED":
             showConnectedModal()
@@ -14,32 +26,46 @@ ws.onmessage = (message) => {
             break;
 
         case "BOARD_FEN_ACK":
-            updateBoard(board, message.data)
+            updateBoard(board, data.newFen)
             break;
 
         case "BOT_MOVE":
-            updateBoard(board, message.data)
+            doMove(board, data.move);
+            updateBoard(board, data.newFen)
+            break;
+
+        case "BOT_USE_BONUS":
+            // data.square and data.piece is also sent
+            updateBoard(board, data.fen)
+            // todo remove bot bonus piece from ui
             break;
 
         case "NEIGHBOUR_MOVE":
-            if (message.data.board === "board1") {
-                updateBoard(board0, message.data)
+            if (data.neighbour === 1) {
+                updateBoard(board0, data.newFen)
             } else {
-                updateBoard(board2, message.data)
+                updateBoard(board2, data.newFen)
             }
             break;
 
+        case "NEIGHBOUR_FINISHED":
+            // todo implement this
+            // data.neighbour is 1 or 2
+            // data.neighbour_won is true or false
+            break;
+
         case "BONUS_PIECE":
-            notifyBonusPiece(message.data)
+            notifyBonusPiece(data.piece)
             break;
 
         case "UPDATE_PLAYER_COUNT":
-            updatePlayerCount(message.data)
+            updatePlayerCount(data.playerCount)
             break;
 
         case "GAME_OVER":
+            // data.player_won, data.reason, data.position (what place the player got)
             gameOver(board)
-            break; 
+            break;
 
         default:
             console.error(message)
@@ -47,12 +73,21 @@ ws.onmessage = (message) => {
 
 }
 
+ws.onclose = () => {
+    console.log("Connection closed");
+}
+
+function doMove(board, moveString) {
+    board.move(moveString);
+}
+
 function updateBoard(board, FENstring) {
     board.position(FENstring, true)
+    game.load(FENstring);
 }
 
 function startGame(board) {
-    board.start
+    board.start()
 }
 
 function updatePlayerCount(playerCount) {
@@ -70,7 +105,7 @@ function notifyBonusPiece(piece) {
 }
 
 function useBonusPiece(piece, target) {
-    ws.send(JSON.stringify({type: "USE_BONUS_PIECE", data: {piece: piece, target: target}}))
+    send("USE_BONUS_PIECE", {piece: piece, target: target})
 }
 
 let counter = 0
@@ -91,21 +126,30 @@ function count(){
   }
 
 function showConnectedModal() {
-    $('#waitlist_modal')[0].checked = true;
+    alert("You are now in the waiting list!")
+    // todo show modal
+    // todo change "play" button to "start"
+    // $('#waitlist_modal')[0].checked = true;
+
+    send("START_GAME") // temp for testing
 }
 
 function hideConnectedModal() {
-    $('#waitlist_modal')[0].checked = false;
+    alert("You are now in the game!")
+    // $('#waitlist_modal')[0].checked = false;
 }
 
 function connect() {
     console.log("connecting")
-    ws.send(JSON.stringify({type: "CONNECT_REQUEST", data: []}))
+    send("CONNECT_REQUEST")
 }
 
 function sendMove(move) {
     console.log("Sending Move: " + move)
-    ws.send(JSON.stringify({type: "PLAYER_MOVE", data: {move: move}}))
+    send("PLAYER_MOVE", {move: move})
 }
 
 startTimer()
+
+// TEMP
+window.start = () => startGame(board)

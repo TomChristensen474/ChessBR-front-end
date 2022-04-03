@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+
 .white-1e1d7 {
     background-color:  hsla(var(--bc)/0.5);
     color: hsla(var(--b1));
@@ -28,6 +30,87 @@
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(80, 80, 80, 0.3);
+}
+
+
+h1 {
+    color: #ba3cde;
+    /*font-family: 'Teko', sans-serif;*/
+    font-family: "Press Start 2P", Arial, sans-serif;
+    text-transform: uppercase;
+    animation: glow 2s ease-in-out infinite alternate;
+    text-align: center;
+}
+
+/*h1:after {*/
+/*    content: "Chess Battle Royale"*/
+/*    position: absolute; left: 10px; top: 5px;*/
+/*    color: red;*/
+/*}*/
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 20px #7e2da9;
+    }
+    to {
+        text-shadow: 0 0 30px #ba3cde, 0 0 10px #ae54e5;
+    }
+}
+
+/*@keyframes glow {*/
+/*    from {*/
+/*        text-shadow: 0 0 20px #2d9da9;*/
+/*    }*/
+/*    to {*/
+/*        text-shadow: 0 0 30px #34b3c1, 0 0 10px #4dbbc7;*/
+/*    }*/
+/*}*/
+
+.svg-wrapper {
+    height: 60px;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+}
+
+.shape {
+    fill: transparent;
+    stroke-dasharray: 140 540;
+    stroke-dashoffset: -474;
+    stroke-width: 8px;
+    stroke: #19f6e8;
+}
+
+.text {
+    color: #fff;
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    line-height: 32px;
+    position: relative;
+    top: -48px;
+}
+
+@keyframes draw {
+    0% {
+        stroke-dasharray: 140 540;
+        stroke-dashoffset: -474;
+        stroke-width: 8px;
+        stroke: #19f6e8;
+    }
+    100% {
+        stroke-dasharray: 760;
+        stroke-dashoffset: 0;
+        stroke-width: 4px;
+        stroke: #CF2BD9;
+    }
+}
+
+.svg-wrapper:hover .shape {
+    -webkit-animation: 0.5s draw linear forwards;
+    animation: 0.5s draw linear forwards;
 }
 
 .spare-pieces-top-4028b {

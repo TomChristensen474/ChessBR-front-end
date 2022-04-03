@@ -21,7 +21,7 @@ function onDrop (source, target, piece) {
     useBonusPiece(piece[1], target)
     return
   }
-  
+
   // see if the move is legal
   var move = game.move({
     from: source,
@@ -85,8 +85,11 @@ var config = {
   pieceTheme: 'img/chesspieces/ChessSVG/{piece}.svg',
 }
 board = Chessboard('board', config)
+$(window).resize(board.resize)
 
 board0 = Chessboard('board0', {...config, showNotation: false})
 board2 = Chessboard('board2', {...config, showNotation: false})
+$(window).resize(board0.resize)
+$(window).resize(board2.resize)
 
 updateStatus()

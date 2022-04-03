@@ -82,7 +82,7 @@ var config = {
   onDrop: onDrop,
   onSnapEnd: onSnapEnd,
   sparePieces: true,
-  pieceTheme: 'img/chesspieces/ChessSVG/{piece}.svg',
+  pieceTheme: 'img/chesspieces/Wikipedia Borders/wikipedia/{piece}.png',
 }
 board = Chessboard('board', config)
 $(window).resize(board.resize)
@@ -91,5 +91,16 @@ board0 = Chessboard('board0', {...config, draggable: false, showNotation: false}
 board2 = Chessboard('board2', {...config, draggable: false, showNotation: false})
 $(window).resize(board0.resize)
 $(window).resize(board2.resize)
+document.getElementById("HowToPlay").style.display = "none";
+document.getElementById("WaitingList").style.display = "none";
 
 updateStatus()
+
+function showOrHideDiv(elementID) {
+  let v = document.getElementById(elementID);
+  if (v.style.display === "none") {
+    v.style.display = "block";
+  } else {
+    v.style.display = "none";
+  }
+}

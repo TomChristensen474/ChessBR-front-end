@@ -1,5 +1,5 @@
-// const ws = new WebSocket("ws://192.168.1.206:8765");
-const ws = new WebSocket("ws://localhost:8765");
+const ws = new WebSocket("ws://192.168.1.206:8765");
+// const ws = new WebSocket("ws://localhost:8765");
 
 ws.onopen = () => {
   console.log("Connected to server");
@@ -65,6 +65,7 @@ ws.onmessage = (message) => {
         case "GAME_OVER":
             // data.player_won, data.reason, data.position (what place the player got)
             gameOver(board)
+            window.location.href = 'GameOver.html';
             break;
 
         default:
@@ -87,6 +88,7 @@ function updateBoard(board, FENstring) {
 }
 
 function startGame(board) {
+    // showOrHideDiv("WaitingList");
     board.start()
 }
 
@@ -127,6 +129,7 @@ function count(){
 
 function showConnectedModal() {
     alert("You are now in the waiting list!")
+    showOrHideDiv("WaitingList")
     // todo show modal
     // todo change "play" button to "start"
     // $('#waitlist_modal')[0].checked = true;

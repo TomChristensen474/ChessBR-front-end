@@ -42,6 +42,10 @@ h1 {
     text-align: center;
 }
 
+
+h2 {
+    font-family: "Press Start 2P", Arial, sans-serif;
+}
 /*h1:after {*/
 /*    content: "Chess Battle Royale"*/
 /*    position: absolute; left: 10px; top: 5px;*/

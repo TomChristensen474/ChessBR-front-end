@@ -1,4 +1,5 @@
 var board = null
+let boardFinal = null;
 var game = new Chess()
 var $status = $('#status')
 var $fen = $('#fen')
@@ -85,7 +86,7 @@ var config = {
   onDrop: onDrop,
   onSnapEnd: onSnapEnd,
   sparePieces: true,
-  pieceTheme: 'img/chesspieces/wikipedia/{piece}.png',
+  pieceTheme: 'img/chesspieces/wikipedia/wikipedia/{piece}.png',
 }
 board = Chessboard('board', config)
 $(window).resize(board.resize)
@@ -107,4 +108,12 @@ function showOrHideDiv(elementID) {
   } else {
     v.style.display = "none";
   }
+}
+
+function playAgain(){
+  window.location.href = "index.html";
+}
+
+function seeTheBoard(){
+  // boardFinal = Chessboard('boardFinal', {position: board.position(game.fen()), draggable:false})
 }

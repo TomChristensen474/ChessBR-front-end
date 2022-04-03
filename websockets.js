@@ -69,6 +69,10 @@ ws.onmessage = (message) => {
             // data.reason is one of "CHECKMATE", "STALEMATE", "OUT_OF_TIME", "PLAYER_RESIGNED", "BOT_RESIGNED"
             // data.position is the leaderboard position of the player
             gameOver(board)
+            let GameOverState = document.getElementById("GameState");
+            GameOverState.innerHTML = data.reason;
+            let placement = document.getElementById("Placement");
+            placement.innerHTML = "You placed data.position";
             window.location.href = 'GameOver.html';
             break;
 
@@ -96,12 +100,26 @@ function updateSideBoard(board, FENstring) {
 }
 
 function startGame(board) {
-    // showOrHideDiv("WaitingList");
+    showOrHideDiv("WaitingList");
     board.start()
 }
 
 function updatePlayerCount(playerCount) {
-    $('#playerCount').html("Player Count: " + playerCount)
+    $('#playerCount').html("Players left: <br>" + playerCount)
+    if (status === "ON_WAITING_LIST"){
+      updatePlayersWaiting(playerCount);
+    }
+}
+
+function updatePlayersWaiting(playerCount){
+    let playerList = document.getElementById("playerList");
+    // for (const child of playerList.children){
+    //     playerList.removeChild(child);
+    // }
+    playerList.innerHTML = "";
+    for (let i = playerCount; i > 0; i--) {
+        playerList.innerHTML+=`<li><a>Player ${i}</a></li>`;
+    }
 }
 
 function gameOver(board) {
@@ -140,7 +158,7 @@ function count(){
 function showConnectedModal() {
     status = "ON_WAITING_LIST";
     alert("You are now in the waiting list!")
-    showOrHideDiv("WaitingList")
+    showOrHideDiv("WaitingList");
     // todo show modal
     // todo change "play" button to "start"
     // $('#waitlist_modal')[0].checked = true;
@@ -152,7 +170,6 @@ function hideConnectedModal() {
     status = "IN_GAME";
     alert("You are now in the game!")
     // $('#waitlist_modal')[0].checked = false;
-    showOrHideDiv("WaitingList")
 }
 
 function connect() {

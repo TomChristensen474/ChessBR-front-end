@@ -7,6 +7,7 @@ var $pgn = $('#pgn')
 function onDragStart (source, piece, position, orientation) {
   // do not pick up pieces if the game is over
   if (game.game_over()) return false
+  if(status !== "IN_GAME") return false;
 
   // only pick up pieces for the white side
   if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
@@ -17,6 +18,7 @@ function onDragStart (source, piece, position, orientation) {
 
 function onDrop (source, target, piece) {
   console.log(piece[1], target)
+  if(target === "offboard") return "snapback";
   if (source === "spare") {
     useBonusPiece(piece[1], target)
     return
@@ -94,6 +96,7 @@ $(window).resize(board2.resize)
 document.getElementById("HowToPlay").style.display = "none";
 document.getElementById("WaitingList").style.display = "none";
 
+initSpareDiv();
 updateStatus()
 
 function showOrHideDiv(elementID) {

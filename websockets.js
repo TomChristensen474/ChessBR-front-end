@@ -1,6 +1,8 @@
 const ws = new WebSocket("ws://192.168.1.206:8765");
 // const ws = new WebSocket("ws://localhost:8765");
 
+let status = "CONNECTING";
+
 ws.onopen = () => {
   console.log("Connected to server");
   // ws.send({type: "CONNECT_REQUEST"})
@@ -26,25 +28,25 @@ ws.onmessage = (message) => {
             break;
 
         case "BOARD_FEN_ACK":
-            updateBoard(board, data.newFen)
+            updateMainBoard(data.newFen)
             break;
 
         case "BOT_MOVE":
             doMove(board, data.move);
-            updateBoard(board, data.newFen)
+            updateMainBoard(data.newFen)
             break;
 
         case "BOT_USE_BONUS":
             // data.square and data.piece is also sent
-            updateBoard(board, data.fen)
+            updateMainBoard(data.fen)
             // todo remove bot bonus piece from ui
             break;
 
         case "NEIGHBOUR_MOVE":
             if (data.neighbour === 1) {
-                updateBoard(board0, data.newFen)
+                updateSideBoard(board0, data.newFen)
             } else {
-                updateBoard(board2, data.newFen)
+                updateSideBoard(board2, data.newFen)
             }
             break;
 
@@ -63,7 +65,9 @@ ws.onmessage = (message) => {
             break;
 
         case "GAME_OVER":
-            // data.player_won, data.reason, data.position (what place the player got)
+            // data.player_won is true or false
+            // data.reason is one of "CHECKMATE", "STALEMATE", "OUT_OF_TIME", "PLAYER_RESIGNED", "BOT_RESIGNED"
+            // data.position is the leaderboard position of the player
             gameOver(board)
             window.location.href = 'GameOver.html';
             break;
@@ -82,9 +86,13 @@ function doMove(board, moveString) {
     board.move(moveString);
 }
 
-function updateBoard(board, FENstring) {
+function updateMainBoard(FENstring) {
     board.position(FENstring, true)
     game.load(FENstring);
+}
+
+function updateSideBoard(board, FENstring) {
+    board.position(FENstring, true);
 }
 
 function startGame(board) {
@@ -102,12 +110,14 @@ function gameOver(board) {
 
 function notifyBonusPiece(piece) {
     $("#pieceNotificationText").html("You have received a piece: " + piece)
+    addSparePiece(piece);
     $("#pieceNotification").fadeIn()
     $("#pieceNotification").delay(3000).fadeOut()
 }
 
 function useBonusPiece(piece, target) {
-    send("USE_BONUS_PIECE", {piece: piece, target: target})
+    send("USE_BONUS_PIECE", {piece: piece, square: target})
+    usedSparePiece();
 }
 
 let counter = 0
@@ -128,23 +138,28 @@ function count(){
   }
 
 function showConnectedModal() {
+    status = "ON_WAITING_LIST";
     alert("You are now in the waiting list!")
     showOrHideDiv("WaitingList")
     // todo show modal
     // todo change "play" button to "start"
     // $('#waitlist_modal')[0].checked = true;
 
-    send("START_GAME") // temp for testing
+    // send("START_GAME") // temp for testing
 }
 
 function hideConnectedModal() {
+    status = "IN_GAME";
     alert("You are now in the game!")
     // $('#waitlist_modal')[0].checked = false;
 }
 
 function connect() {
-    console.log("connecting")
-    send("CONNECT_REQUEST")
+    if(status === "CONNECTING") {
+        send("CONNECT_REQUEST")
+    } else if(status === "ON_WAITING_LIST") {
+        send("START_GAME")
+    }
 }
 
 function sendMove(move) {

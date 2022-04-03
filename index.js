@@ -21,6 +21,7 @@ function onDrop (source, target, piece) {
   if(target === "offboard") return "snapback";
   if (source === "spare") {
     useBonusPiece(piece[1], target)
+    game.turn()
     return
   }
 
@@ -41,7 +42,7 @@ function onDrop (source, target, piece) {
 // update the board position after the piece snap
 // for castling, en passant, pawn promotion
 function onSnapEnd () {
-  board.position(game.fen())
+  board.position(game.fen(), true)
 }
 
 function updateStatus () {
@@ -84,7 +85,7 @@ var config = {
   onDrop: onDrop,
   onSnapEnd: onSnapEnd,
   sparePieces: true,
-  pieceTheme: 'img/chesspieces/Wikipedia Borders/wikipedia/{piece}.png',
+  pieceTheme: 'img/chesspieces/wikipedia/{piece}.png',
 }
 board = Chessboard('board', config)
 $(window).resize(board.resize)

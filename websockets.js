@@ -152,6 +152,7 @@ function hideConnectedModal() {
     status = "IN_GAME";
     alert("You are now in the game!")
     // $('#waitlist_modal')[0].checked = false;
+    showOrHideDiv("WaitingList")
 }
 
 function connect() {

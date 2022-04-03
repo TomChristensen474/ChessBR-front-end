@@ -16,9 +16,15 @@ let initSpareDiv = () => {
         sparePiecesDiv.removeChild(sparePieceDiv);
     }
 
+    // remove spare pieces of other boards
+    let leftBoard = document.getElementsByClassName("chessboard-63f37")[0];
+    leftBoard.removeChild(leftBoard.children[2]);
+    let rightBoard = document.getElementsByClassName("chessboard-63f37")[2];
+    rightBoard.removeChild(rightBoard.children[2]);
 }
 
 let addSparePiece = (piece) => {
+    if(piece.startsWith('b')) return;
     let sparePieceDiv = sparePieces[piece];
     sparePiecesDiv.appendChild(sparePieceDiv.cloneNode());
 }
